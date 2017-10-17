@@ -32,7 +32,7 @@ public class EnemySpawner : MonoBehaviour {
 		Vector3 spawnPosition;
 		if (TryFindPosition (10, out spawnPosition)) {
 			//Instantiate (enemyPrefab, spawnPosition, transform.rotation);
-			Poolable obj = ObjectPoolsManager.Instance.GetObject(enemyPrefab);
+			GameObject obj = enemyPrefab.GetInstance();
 			obj.transform.position = spawnPosition;
 			obj.transform.rotation = transform.rotation;
 		}

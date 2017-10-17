@@ -19,7 +19,7 @@ public class Singleton<T> : MonoBehaviour where T:Singleton<T> {
 	}
 
 	void Awake() {
-		if (instance) {
+		if (instance && instance != this) {
 			Destroy (gameObject);
 		} else {
 			instance = (T)this;

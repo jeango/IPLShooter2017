@@ -4,32 +4,30 @@ using UnityEngine;
 
 public class ObjectPool {
 
-	private Queue<Poolable> pool = new Queue<Poolable>();
+	private Queue<GameObject> pool = new Queue<GameObject>();
 
-	private Poolable prefab;
+	private GameObject prefab;
 
-	public ObjectPool(Poolable prefab) {
+	public ObjectPool(GameObject prefab) {
 		this.prefab = prefab;
 	}
 
-	public Poolable GetObject() {
-		Poolable obj;
+	public GameObject GetObject() {
+		GameObject obj;
 		if (pool.Count == 0) {
-			obj = GameObject.Instantiate<Poolable> (prefab);
+			obj = GameObject.Instantiate<GameObject> (prefab);
 			obj.name = prefab.name;
 		} else {
 			obj = pool.Dequeue ();
-			obj.OnUnpool ();
 		}
 		return obj;
 	}
 
-	public bool PoolObject(Poolable obj) {
+	public bool PoolObject(GameObject obj) {
 		if (obj.name != prefab.name) {
 			return false;
 		}
 		pool.Enqueue (obj);
-		obj.OnPool ();
 		return true;
 	}
 }

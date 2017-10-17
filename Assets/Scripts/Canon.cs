@@ -8,34 +8,29 @@ public class Canon : MonoBehaviour {
 
 	public float fireInterval = 0.1f;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+	private bool shooting = false;
 
-	// Update is called once per frame
-	void Update () {
-		if (Input.GetButtonDown ("Fire1")) {
-			StartCoroutine (FireCoroutine ());
-		}
-		if (Input.GetButtonUp("Fire1")) {
-			StopAllCoroutines ();
+	public void SetShooting (bool mode){
+		shooting = mode;
+		StopAllCoroutines ();
+		if (mode) {
+			StartCoroutine (FireCoroutine());
 		}
 	}
 
 	void Fire() {
 		//Instantiate (projectilePrefab, transform.position, transform.rotation);
-		Poolable obj = ObjectPoolsManager.Instance.GetObject(projectilePrefab);
+		GameObject obj = projectilePrefab.GetInstance();
 		obj.transform.position = transform.position;
 		obj.transform.rotation = transform.rotation;
 
 	}
 
-	IEnumerator FireCoroutine() {
+	public IEnumerator FireCoroutine() {
 		while (true) {
-			Fire ();
+			if (shooting)
+				Fire ();
 			yield return new WaitForSeconds (fireInterval);
 		}
 	}
-
 }
