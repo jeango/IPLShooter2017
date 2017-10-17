@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CustomEvents;
 
 public class Health : MonoBehaviour {
 
 	public int initHealth;
 	public int currentHealth;
+
+	public ObjectBehavioursList dieBehaviours;
 
 	void OnEnable() {
 		currentHealth = initHealth;
@@ -19,11 +22,6 @@ public class Health : MonoBehaviour {
 	}
 
 	public void Die() {
-		Poolable poolable = GetComponent<Poolable> ();
-
-		if (!poolable)
-			Destroy (gameObject);
-		else
-			poolable.TryPool ();
+		dieBehaviours.ExecuteAllBehaviours (gameObject);
 	}
 }
