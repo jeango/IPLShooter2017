@@ -6,7 +6,7 @@ public class ObjectPoolsManager : Singleton<ObjectPoolsManager> {
 
 	private Dictionary<string, ObjectPool> pools = new Dictionary<string, ObjectPool> ();
 
-	private ObjectPool GetPool(Poolable obj) {
+	private ObjectPool GetPool(GameObject obj) {
 		ObjectPool pool;
 		if (!pools.TryGetValue (obj.name, out pool)) {
 			pool = new ObjectPool (obj);
@@ -15,15 +15,12 @@ public class ObjectPoolsManager : Singleton<ObjectPoolsManager> {
 		return pool;
 	}
 
-	public Poolable GetObject(Poolable obj) {
+	public GameObject GetObject(GameObject obj) {
 		return GetPool (obj).GetObject ();
 	}
 
 	public bool PoolObject(GameObject obj) {
-		Poolable poolable = obj.GetComponent<Poolable> ();
-		if (poolable)
-			return GetPool (poolable).PoolObject (poolable);
-		return false;
+		return GetPool(obj).PoolObject (obj);
 	}
 
 }

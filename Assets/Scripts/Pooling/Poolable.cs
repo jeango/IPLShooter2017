@@ -4,11 +4,26 @@ using UnityEngine;
 
 public class Poolable : MonoBehaviour {
 
-	public void OnPool() {
-		gameObject.SetActive (false);
+	public bool isPooled;
+
+	public void SetPooled(bool mode) {
+		gameObject.SetActive (!mode);
+		isPooled = mode;
 	}
 
-	public void OnUnpool() {
-		gameObject.SetActive (true);
+	public bool TryPool() {
+		if (isPooled) {
+			Debug.LogWarning ("Trying to pool an already pooled object");
+			return false;
+		}
+		SetPooled(ObjectPoolsManager.Instance.PoolObject (gameObject));
+		return isPooled;
 	}
+
+	public GameObject GetInstance() {
+		GameObject obj = ObjectPoolsManager.Instance.GetObject (gameObject);
+		obj.GetComponent<Poolable>().SetPooled (false);
+		return obj;
+	}
+
 }

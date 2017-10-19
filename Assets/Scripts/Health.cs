@@ -19,7 +19,10 @@ public class Health : MonoBehaviour {
 	}
 
 	public void Die() {
-		if (!ObjectPoolsManager.Instance.PoolObject(gameObject))
+		Poolable poolable = gameObject.GetComponent<Poolable> ();
+		if (!poolable)
 			Destroy (gameObject);
+		else
+			poolable.TryPool ();
 	}
 }
