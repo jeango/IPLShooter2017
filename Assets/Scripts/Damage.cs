@@ -11,7 +11,14 @@ public class Damage : MonoBehaviour {
 		if (rb) {
 			Health health = rb.GetComponentInChildren<Health> ();
 			if (health) {
-				health.TakeDamage (damage);
+				
+				// on récupère le owner
+				Owner owner = gameObject.GetComponent<Owner> ();
+				// on initialise la source (null si on a pas de Owner)
+				GameObject source = owner ? owner.owner : null;
+				// on le passe dans takedamage
+				health.TakeDamage (damage, source);
+
 			}
 		}
 	}
