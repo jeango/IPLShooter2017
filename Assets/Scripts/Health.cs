@@ -16,7 +16,7 @@ public class Health : MonoBehaviour {
 	// qui est la source du dernier dégât reçu
 	public GameObject damageSource;
 
-
+	public ObjectEvent OnDie;
 
 	void OnEnable() {
 		currentHealth = initHealth;
@@ -36,6 +36,8 @@ public class Health : MonoBehaviour {
 	}
 
 	public void Die() {
+
+		OnDie.Invoke (damageSource);
 
 		if (dieDamageSourceBehaviours)
 			dieDamageSourceBehaviours.ExecuteBehaviours (damageSource);

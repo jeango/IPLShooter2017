@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Singleton<T> : MonoBehaviour where T:Singleton<T> {
 
+	public bool dontDestroyOnLoad = false;
+
 	private static T instance;
 
 	public static T Instance {
@@ -23,7 +25,10 @@ public class Singleton<T> : MonoBehaviour where T:Singleton<T> {
 			Destroy (gameObject);
 		} else {
 			instance = (T)this;
-			DontDestroyOnLoad (this);
+
+			if (dontDestroyOnLoad)
+				DontDestroyOnLoad (this);
+			
 		}
 	}
 

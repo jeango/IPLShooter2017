@@ -11,5 +11,9 @@ namespace My.Events{
 	// qu'il puisse s'afficher dans l'inspecteur
 	[System.Serializable]
 	public class ObjectEvent : UnityEvent<GameObject>{};
+
+	[System.Serializable]
+	public class IntEvent : UnityEvent<int>{};
+
 }
 
