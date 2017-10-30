@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using My.Events;
 
 public class Canon : MonoBehaviour {
 
 	public Poolable projectilePrefab;
 
 	public float fireInterval = 0.1f;
+
+	public ObjectEvent OnFire;
 
 	private bool isShooting = false;
 
@@ -24,6 +27,7 @@ public class Canon : MonoBehaviour {
 		GameObject obj = projectilePrefab.GetInstance();
 		obj.transform.position = transform.position;
 		obj.transform.rotation = transform.rotation;
+		OnFire.Invoke (obj);
 
 	}
 

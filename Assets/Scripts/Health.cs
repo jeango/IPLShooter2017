@@ -7,11 +7,18 @@ public class Health : MonoBehaviour {
 	public int initHealth;
 	public int currentHealth;
 
+	public GameObject damageDealer;
+
+	public ObjectBehavioursList dieBehaviours;
+	public ObjectBehavioursList dieDamageDealerBehaviours;
+
 	void OnEnable() {
 		currentHealth = initHealth;
 	}
 
-	public void TakeDamage(int damage) {
+	public void TakeDamage(int damage, GameObject source = null) {
+		if (source)
+			damageDealer = source;
 		currentHealth -= damage;
 		if (currentHealth <= 0) {
 			Die ();
@@ -19,10 +26,9 @@ public class Health : MonoBehaviour {
 	}
 
 	public void Die() {
-		Poolable poolable = gameObject.GetComponent<Poolable> ();
-		if (!poolable)
-			Destroy (gameObject);
-		else
-			poolable.TryPool ();
+		if (dieBehaviours)
+			dieBehaviours.Execute (gameObject);
+		if (dieDamageDealerBehaviours)
+			dieDamageDealerBehaviours.Execute (damageDealer);
 	}
 }
